@@ -75,9 +75,9 @@ namespace sort
 		}
 	}
 
-    template <typename T>
-    void QuickSort(T* a, const size_t size, bool(*pFn)(const void *, const void *), size_t first = 0)
-    {
+	template <typename T>
+	void QuickSort(T* a, const size_t size, bool(*pFn)(const void *, const void *), size_t first = 0)
+	{
 		size_t it = first, jt = size;
 		T x = a[(it + jt) / 2];
 		while (it <= jt)
@@ -98,11 +98,11 @@ namespace sort
 			QuickSort(a, size, pFn, it);
 	}
 
-    template <typename T>
-    void QuickSort(T* a, const size_t size, bool(*pFn)(const void *, const void *))
-    {
-        QuickSort(a, size, pFn, 0);
-    }
+	template <typename T>
+	void QuickSort(T* a, const size_t size, bool(*pFn)(const void *, const void *))
+	{
+		QuickSort(a, size, pFn, 0);
+	}
 
 	template <typename T>
 	void RadixSort(T* a, const size_t sz, bool(*pFn)(const void *, const void *))
@@ -126,41 +126,41 @@ namespace sort
 	{
 	}
 
-    template <typename T>
-    void DownwardMerge(T* a, const size_t start, const size_t end, bool(*pFn)(const void*, const void*))
-    {
-        auto Merge = [](T* a, const size_t start, const size_t c, const size_t end, bool(*pFn)(const void*, const void*))->void {
-            int* b = new T[end *2];
-            int i = start;
-            int j = c + 1;
-            for (int k = start; k <= end; k++) {
-                if (j > end || (i <= c && pFn(&a[i], &a[j])))
-                    b[k] = a[i++];
-                else 
-                    b[k] = a[j++];
-            }
-            
-            for (int k = start; k <= end; k++) 
-                a[k] = b[k];
-        };
+	template <typename T>
+	void DownwardMerge(T* a, const size_t start, const size_t end, bool(*pFn)(const void*, const void*))
+	{
+		auto Merge = [](T* a, const size_t start, const size_t c, const size_t end, bool(*pFn)(const void*, const void*))->void {
+			int* b = new T[end *2];
+			int i = start;
+			int j = c + 1;
+			for (int k = start; k <= end; k++) {
+				if (j > end || (i <= c && pFn(&a[i], &a[j])))
+					b[k] = a[i++];
+				else 
+					b[k] = a[j++];
+			}
+			
+			for (int k = start; k <= end; k++) 
+				a[k] = b[k];
+		};
 
-        if (end - start < 1)
-            return;
+		if (end - start < 1)
+			return;
 
-        int c = (start + end) / 2;
+		int c = (start + end) / 2;
 
-        if (end - start > 1) {
-            DownwardMerge(a, start, c, pFn);
-            DownwardMerge(a, c + 1, end, pFn);
-        }
-        Merge(a, start, c, end, pFn);
-    }
+		if (end - start > 1) {
+			DownwardMerge(a, start, c, pFn);
+			DownwardMerge(a, c + 1, end, pFn);
+		}
+		Merge(a, start, c, end, pFn);
+	}
 
-    template <typename T>
-    void DownwardMerge(T* a, const size_t sz, bool(*pFn)(const void*, const void*))
-    {
-        DownwardMerge(a, 0, sz, pFn);
-    }
+	template <typename T>
+	void DownwardMerge(T* a, const size_t sz, bool(*pFn)(const void*, const void*))
+	{
+		DownwardMerge(a, 0, sz, pFn);
+	}
 
 	template <typename T>
 	void GrowingMerge(T* a, const size_t sz, bool(*pFn)(const void*, const void*), size_t n = 1)
